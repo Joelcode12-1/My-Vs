@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Studio Code for the Web Replica</title>
+    <link rel="stylesheet" href="https://unpkg.com/@vscode/codicons/dist/codicon.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <svg class="sprite" aria-hidden="true">
+        <symbol id="icon-files" viewBox="0 0 24 24">
+            <path d="M6 2.75h7.25L18 7.5v13.75H6z"></path>
+            <path d="M13 2.75V8h5"></path>
+            <path d="M4 5.75h2v15.5h11v2H4z"></path>
+        </symbol>
+        <symbol id="icon-search" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6.5"></circle>
+            <path d="M15.25 15.25 21 21"></path>
+        </symbol>
+        <symbol id="icon-branch" viewBox="0 0 24 24">
+            <circle cx="6" cy="5" r="2.5"></circle>
+            <circle cx="18" cy="5" r="2.5"></circle>
+            <circle cx="18" cy="19" r="2.5"></circle>
+            <path d="M6 7.5v3A6.5 6.5 0 0 0 12.5 17H15.5"></path>
+            <path d="M18 7.5v9"></path>
+        </symbol>
+        <symbol id="icon-run" viewBox="0 0 24 24">
+            <path d="M7 4.75v14.5L19 12z"></path>
+            <path d="M4 5h2"></path>
+            <path d="M4 19h2"></path>
+        </symbol>
+        <symbol id="icon-settings" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.5 12a7.8 7.8 0 0 0-.08-1.1l2.03-1.58-2-3.46-2.4.97a8.02 8.02 0 0 0-1.9-1.1L14.8 3h-4l-.35 2.73a8.02 8.02 0 0 0-1.9 1.1l-2.4-.97-2 3.46 2.03 1.58A7.8 7.8 0 0 0 6.1 12c0 .37.03.74.08 1.1l-2.03 1.58 2 3.46 2.4-.97a8.02 8.02 0 0 0 1.9 1.1L10.8 21h4l.35-2.73a8.02 8.02 0 0 0 1.9-1.1l2.4.97 2-3.46-2.03-1.58c.05-.36.08-.73.08-1.1z"></path>
+        </symbol>
+        <symbol id="icon-new-file" viewBox="0 0 24 24">
+            <path d="M6 3h8l4 4v14H6z"></path>
+            <path d="M14 3v5h5"></path>
+            <path d="M12 11v6"></path>
+            <path d="M9 14h6"></path>
+        </symbol>
+        <symbol id="icon-new-folder" viewBox="0 0 24 24">
+            <path d="M3 6.5h6l2 2h10v9.75A2.75 2.75 0 0 1 18.25 21H5.75A2.75 2.75 0 0 1 3 18.25z"></path>
+            <path d="M12 12v5"></path>
+            <path d="M9.5 14.5h5"></path>
+        </symbol>
+        <symbol id="icon-refresh" viewBox="0 0 24 24">
+            <path d="M20 12a8 8 0 1 1-2.35-5.65"></path>
+            <path d="M20 4.5v6h-6"></path>
+        </symbol>
+        <symbol id="icon-collapse" viewBox="0 0 24 24">
+            <path d="M4 7h16"></path>
+            <path d="M7 12h10"></path>
+            <path d="M10 17h4"></path>
+        </symbol>
+        <symbol id="icon-close" viewBox="0 0 24 24">
+            <path d="M7 7l10 10"></path>
+            <path d="M17 7 7 17"></path>
+        </symbol>
+        <symbol id="icon-split" viewBox="0 0 24 24">
+            <path d="M4 5h16v14H4z"></path>
+            <path d="M12 5v14"></path>
+        </symbol>
+        <symbol id="icon-warning" viewBox="0 0 24 24">
+            <path d="M12 3 2.75 20h18.5z"></path>
+            <path d="M12 9v5"></path>
+            <path d="M12 17h.01"></path>
+        </symbol>
+        <symbol id="icon-bell" viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+        </symbol>
+    </svg>
+
+    <div class="app-shell">
+        <header class="titlebar">
+            <div class="window-brand">
+                <svg class="brand-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#0065a9" d="m66.6 20.3-46 36.3L66.6 86V20.3Z"/>
+                    <path fill="#007acc" d="M66.6 86 86 77.4V29l-19.4-8.7V86Z"/>
+                    <path fill="#1f9cf0" d="M66.6 20.3 12.3 28.5.5 46.5l16.1 16.1L.5 78.7l11.8 11.2 54.3 8.3V20.3Z"/>
+                </svg>
+            </div>
+            <nav class="menu-bar" aria-label="Application menu">
+                <button class="menu-button" data-menu="file">File</button>
+                <button class="menu-button" data-menu="edit">Edit</button>
+                <button class="menu-button" data-menu="selection">Selection</button>
+                <button class="menu-button" data-menu="view">View</button>
+                <button class="menu-button" data-menu="go">Go</button>
+                <button class="menu-button" data-menu="run">Run</button>
+                <button class="menu-button" data-menu="terminal">Terminal</button>
+                <button class="menu-button" data-menu="help">Help</button>
+            </nav>
+            <button class="command-center" id="command-center" type="button">
+                <span class="command-center-icon">></span>
+                <span>web-project</span>
+            </button>
+        </header>
+
+        <div class="workbench">
+            <nav class="activity-bar" aria-label="Activity Bar">
+                <button class="activity-item active" type="button" data-view="explorer" title="Explorer">
+                    <span class="codicon codicon-files" aria-hidden="true"></span>
+                    <span class="activity-badge" id="explorer-badge">1</span>
+                </button>
+                <button class="activity-item" type="button" data-view="search" title="Search">
+                    <span class="codicon codicon-search" aria-hidden="true"></span>
+                </button>
+                <button class="activity-item" type="button" data-view="scm" title="Source Control">
+                    <span class="codicon codicon-source-control" aria-hidden="true"></span>
+                </button>
+                <button class="activity-item" type="button" data-view="run" title="Run and Debug">
+                    <span class="codicon codicon-debug-alt" aria-hidden="true"></span>
+                </button>
+                <button class="activity-item bottom" type="button" data-view="settings" title="Settings">
+                    <span class="codicon codicon-account" aria-hidden="true"></span>
+                </button>
+            </nav>
+
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h2 id="sidebar-title">Explorer</h2>
+                    <div class="sidebar-actions" id="explorer-actions">
+                        <button class="icon-button" type="button" id="new-file-button" title="New File">
+                            <span class="codicon codicon-new-file" aria-hidden="true"></span>
+                        </button>
+                        <button class="icon-button" type="button" id="new-folder-button" title="New Folder">
+                            <span class="codicon codicon-new-folder" aria-hidden="true"></span>
+                        </button>
+                        <button class="icon-button" type="button" id="refresh-button" title="Refresh">
+                            <span class="codicon codicon-refresh" aria-hidden="true"></span>
+                        </button>
+                        <button class="icon-button" type="button" id="collapse-button" title="Collapse Folders">
+                            <span class="codicon codicon-collapse-all" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <section class="sidebar-view active" id="view-explorer" data-view-panel="explorer">
+                    <div class="section-title open">WEB-PROJECT</div>
+                    <div class="tree" id="file-tree" aria-label="File Explorer"></div>
+                </section>
+
+                <section class="sidebar-view search-view" id="view-search" data-view-panel="search" hidden>
+                    <label class="field-label" for="search-input">Search</label>
+                    <input class="vscode-input" id="search-input" type="search" spellcheck="false" autocomplete="off">
+                    <label class="field-label" for="replace-input">Replace</label>
+                    <div class="replace-row">
+                        <input class="vscode-input" id="replace-input" type="text" spellcheck="false" autocomplete="off">
+                        <button class="small-button" id="replace-button" type="button">Replace</button>
+                    </div>
+                    <div class="search-meta" id="search-meta">No results.</div>
+                    <div class="search-results" id="search-results"></div>
+                </section>
+
+                <section class="sidebar-view scm-view" id="view-scm" data-view-panel="scm" hidden>
+                    <textarea class="vscode-textarea" id="commit-message" rows="3" placeholder="Message"></textarea>
+                    <button class="primary-button" id="commit-button" type="button">Commit</button>
+                    <div class="section-title open">CHANGES <span id="changes-count">0</span></div>
+                    <div class="changes-list" id="changes-list"></div>
+                </section>
+
+                <section class="sidebar-view run-view" id="view-run" data-view-panel="run" hidden>
+                    <button class="run-button" id="start-debug-button" type="button">
+                        <span class="codicon codicon-debug-alt" aria-hidden="true"></span>
+                        Run and Debug
+                    </button>
+                    <div class="debug-block">
+                        <div class="debug-heading">Variables</div>
+                        <div class="debug-empty">No debug session</div>
+                    </div>
+                    <div class="debug-block">
+                        <div class="debug-heading">Watch</div>
+                        <div class="debug-empty">No expressions</div>
+                    </div>
+                    <div class="debug-block">
+                        <div class="debug-heading">Call Stack</div>
+                        <div class="debug-empty">Not running</div>
+                    </div>
+                </section>
+
+                <section class="sidebar-view settings-view" id="view-settings" data-view-panel="settings" hidden>
+                    <label class="setting-row">
+                        <span>Color Theme</span>
+                        <select class="vscode-select" id="theme-select">
+                            <option value="dark">Dark Modern</option>
+                            <option value="dark-plus">Dark+</option>
+                            <option value="hc">High Contrast</option>
+                        </select>
+                    </label>
+                    <label class="setting-row">
+                        <span>Font Size</span>
+                        <input class="vscode-input" id="font-size-input" type="number" min="11" max="22" value="14">
+                    </label>
+                    <label class="setting-check">
+                        <input id="word-wrap-check" type="checkbox">
+                        <span>Word Wrap</span>
+                    </label>
+                </section>
+            </aside>
+
+            <div class="pane-resizer vertical" id="sidebar-resizer" role="separator" aria-orientation="vertical"></div>
+
+            <main class="editor-workbench">
+                <div class="tabs-row" id="tabs-row" aria-label="Open Editors"></div>
+                <div class="breadcrumbs" id="breadcrumbs">web-project</div>
+                <section class="editor-region">
+                    <div class="empty-editor" id="empty-editor">
+                        <div class="empty-logo" aria-hidden="true"></div>
+                        <h1>Visual Studio Code</h1>
+                        <div class="welcome-columns">
+                            <div>
+                                <h2>Start</h2>
+                                <button class="link-button" type="button" data-command="newFile">New File</button>
+                                <button class="link-button" type="button" data-command="newFolder">New Folder</button>
+                                <button class="link-button" type="button" data-command="showCommands">Show All Commands</button>
+                            </div>
+                            <div>
+                                <h2>Recent</h2>
+                                <button class="link-button recent-file" type="button" data-open-path="data/workspace.json">data/workspace.json</button>
+                                <button class="link-button recent-file" type="button" data-open-path="data/index.html">data/index.html</button>
+                                <button class="link-button recent-file" type="button" data-open-path="data/style.css">data/style.css</button>
+                                <button class="link-button recent-file" type="button" data-open-path="data/script.js">data/script.js</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="editor-container" id="editor-container"></div>
+                </section>
+
+                <div class="pane-resizer horizontal" id="panel-resizer" role="separator" aria-orientation="horizontal"></div>
+
+                <section class="bottom-panel" id="bottom-panel">
+                    <div class="panel-tabs">
+                        <button class="panel-tab" type="button" data-panel="problems">PROBLEMS</button>
+                        <button class="panel-tab" type="button" data-panel="output">OUTPUT</button>
+                        <button class="panel-tab" type="button" data-panel="debug">DEBUG CONSOLE</button>
+                        <button class="panel-tab active" type="button" data-panel="terminal">TERMINAL</button>
+                        <div class="panel-spacer"></div>
+                        <button class="icon-button" type="button" id="split-editor-button" title="Split Editor">
+                            <svg><use href="#icon-split"></use></svg>
+                        </button>
+                        <button class="icon-button" type="button" id="toggle-panel-button" title="Toggle Panel">
+                            <svg><use href="#icon-close"></use></svg>
+                        </button>
+                    </div>
+                    <div class="panel-content" id="panel-problems" hidden>
+                        <div class="panel-line">
+                            <svg><use href="#icon-warning"></use></svg>
+                            No problems have been detected in the workspace.
+                        </div>
+                    </div>
+                    <div class="panel-content" id="panel-output" hidden>
+                        <pre>[info] web-project loaded
+[info] Monaco editor ready
+[info] File system provider: in-memory</pre>
+                    </div>
+                    <div class="panel-content" id="panel-debug" hidden>
+                        <pre>Debug adapter is idle.</pre>
+                    </div>
+                    <div class="panel-content terminal-content" id="panel-terminal">
+                        <div class="terminal-line"><span class="terminal-path">web-project</span><span>npm run dev</span></div>
+                        <div class="terminal-line muted">Local editor shell running at http://localhost</div>
+                        <div class="terminal-line"><span class="terminal-path">web-project</span><span class="terminal-cursor"></span></div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer class="status-bar">
+            <div class="status-left">
+                <button class="status-item status-branch" type="button">
+                    <svg><use href="#icon-branch"></use></svg>
+                    main
+                </button>
+                <span class="status-item">0 errors</span>
+                <span class="status-item">0 warnings</span>
+                <span class="status-item" id="status-file">No folder</span>
+            </div>
+            <div class="status-right">
+                <span class="status-item" id="status-position">Ln 1, Col 1</span>
+                <span class="status-item" id="status-spaces">Spaces: 2</span>
+                <span class="status-item">UTF-8</span>
+                <span class="status-item">LF</span>
+                <span class="status-item" id="status-language">Plain Text</span>
+                <button class="status-item status-button" type="button" id="notifications-button">
+                    <svg><use href="#icon-bell"></use></svg>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <div class="menu-popover" id="menu-popover" hidden></div>
+
+    <div class="command-palette" id="command-palette" hidden>
+        <div class="command-box">
+            <input id="command-input" class="command-input" type="text" autocomplete="off" spellcheck="false">
+            <div class="command-list" id="command-list"></div>
+        </div>
+    </div>
+
+    <div class="dialog-backdrop" id="dialog-backdrop" hidden>
+        <form class="input-dialog" id="input-dialog">
+            <h2 id="dialog-title">Name</h2>
+            <label id="dialog-label" for="dialog-input">Name</label>
+            <input id="dialog-input" class="vscode-input" type="text" autocomplete="off" spellcheck="false">
+            <p class="dialog-error" id="dialog-error"></p>
+            <div class="dialog-actions">
+                <button class="secondary-button" id="dialog-cancel" type="button">Cancel</button>
+                <button class="primary-button" id="dialog-submit" type="submit">OK</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="context-menu" id="context-menu" hidden>
+        <button type="button" data-context-action="newFile">New File</button>
+        <button type="button" data-context-action="newFolder">New Folder</button>
+        <button type="button" data-context-action="rename">Rename</button>
+        <button type="button" data-context-action="delete">Delete</button>
+    </div>
+
+    <div class="toast" id="toast" hidden></div>
+</body>
+
+</html>
